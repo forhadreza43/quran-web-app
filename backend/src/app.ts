@@ -4,6 +4,8 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import { env } from './config/env.js';
 import { createResponse } from './utils/apiResponse.js';
+import { surahRouter } from './routes/surah.routes.js';
+
 export const app = express();
 
 app.disable('x-powered-by');
@@ -38,3 +40,5 @@ app.get('/', (_req, res) => {
       })
    );
 });
+
+app.use(`${env.API_PREFIX}/surahs`, surahRouter);
