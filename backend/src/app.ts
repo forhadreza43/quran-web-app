@@ -9,6 +9,7 @@ import { createResponse } from './utils/apiResponse.js';
 import { surahRouter } from './routes/surah.routes.js';
 import { ayahRouter } from './routes/ayah.routes.js';
 import { audioRouter } from './routes/audio.routes.js';
+import { searchRouter } from './routes/search.routes.js';
 
 export const app = express();
 
@@ -47,6 +48,7 @@ app.get('/', (_req, res) => {
 app.use(`${env.API_PREFIX}/surahs`, surahRouter);
 app.use(`${env.API_PREFIX}/ayah`, ayahRouter);
 app.use(`${env.API_PREFIX}/audio`, audioRouter);
+app.use(`${env.API_PREFIX}/search`, searchRouter);
 
 app.use(notFound);
 app.use(errorHandler);
