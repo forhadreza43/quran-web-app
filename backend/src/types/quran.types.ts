@@ -50,6 +50,14 @@ export type AudioResponse = {
    audioUrl: string;
 };
 
+export type SurahAudioResponse = {
+   surahNumber: number;
+   surahNameEnglish: string;
+   surahTranslatedName: string;
+   totalAyahs: number;
+   audioUrls: AudioResponse[];
+};
+
 export type APIResponse<T> = {
    success: boolean;
    message: string;
