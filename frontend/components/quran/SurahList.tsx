@@ -1,5 +1,6 @@
 import { Search } from 'lucide-react';
 import type { Surah } from '@/lib/quran';
+import MainOpenBookIcon from '@/assets/icons/MainOpenBookIcon';
 
 export type ReaderTab = 'Surah' | 'Juz' | 'Page';
 
@@ -39,16 +40,25 @@ export default function SurahList({
 
    return (
       <aside className={`flex flex-col ${shellClass}`}>
+         <div className="p-1 flex items-center gap-2 pb-3 lg:hidden">
+            <MainOpenBookIcon className="h-8 w-8" />
+            <div>
+               <h1 className="text-lg font-semibold leading-tight">
+                  Quran Mazid
+               </h1>
+               <p className="text-xs text-muted-foreground leading-tight">
+                  Read, Study, and Learn The Quran
+               </p>
+            </div>
+         </div>
          <div className="grid grid-cols-3 gap-1 rounded-full bg-muted p-1 text-sm">
             {tabs.map((item) => (
                <button
                   type="button"
                   key={item}
                   onClick={() => onTabChange(item)}
-                  className={`rounded-full py-1.5 font-medium transition ${
-                     tab === item
-                        ? 'bg-card text-foreground shadow-sm'
-                        : 'text-muted-foreground'
+                  className={`rounded-full py-1.5 text-muted-foreground font-medium transition ${
+                     tab === item ? 'bg-card shadow-sm' : ''
                   }`}
                >
                   {item}
@@ -64,7 +74,8 @@ export default function SurahList({
                className="w-full rounded-full bg-muted py-2.5 pl-9 pr-3 text-sm outline-none ring-primary/30 focus:ring-2"
             />
          </div>
-         <div className="mt-3 flex-1 space-y-1.5 overflow-y-auto pr-1">
+         {/* Use scrollbar-auto, scrollbar-thin, and scrollbar-none to control scrollbar-width: */}
+         <div className="mt-3 flex-1 space-y-1.5 overflow-y-auto scrollbar-thin scrollbar-thumb-primary/30 scrollbar-track-transparent pr-1">
             {surahs.map((surah) => {
                const active = surah.number === selectedSurah;
 
@@ -73,30 +84,30 @@ export default function SurahList({
                      type="button"
                      key={surah.number}
                      onClick={() => onSelectedSurahChange(surah.number)}
-                     className={`flex w-full items-center gap-3 rounded-xl border p-2.5 text-left transition ${
+                     className={`flex w-full items-center gap-3 rounded-xl border text-left transition py-4 px-3.5 group ${
                         active
-                           ? 'border-primary/30 bg-primary-soft'
-                           : 'border-transparent hover:bg-muted'
+                           ? 'border-primary/30 bg-primary/10'
+                           : 'border-border hover:bg-primary/10'
                      }`}
                   >
                      <div
-                        className={`grid h-10 w-10 shrink-0 rotate-45 place-items-center rounded-md text-sm font-semibold ${
+                        className={`grid h-8 w-8 shrink-0 rotate-45 place-items-center rounded-md text-sm font-semibold ${
                            active
                               ? 'bg-primary text-primary-foreground'
-                              : 'bg-muted text-foreground'
+                              : 'bg-muted text-foreground group-hover:bg-primary'
                         }`}
                      >
                         <span className="-rotate-45">{surah.number}</span>
                      </div>
                      <div className="min-w-0 flex-1">
-                        <div className="truncate text-sm font-semibold">
+                        <div className="truncate text-sm font-semibold text-foreground/70">
                            {surah.englishName}
                         </div>
-                        <div className="truncate text-xs text-muted-foreground">
+                        <div className="truncate text-xs text-muted-foreground mt-1">
                            {surah.englishNameTranslation}
                         </div>
                      </div>
-                     <div className="font-arabic text-xl text-foreground/80">
+                     <div className="font-arabic text-xl text-muted-foreground">
                         {surah.name.replace('سُورَةُ ', '')}
                      </div>
                   </button>

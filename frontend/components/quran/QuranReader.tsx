@@ -9,6 +9,7 @@ import ReaderSettings from './ReaderSettings';
 import ReadingPanel from './ReadingPanel';
 import SupportPanel from './SupportPanel';
 import SurahList, { type ReaderTab } from './SurahList';
+import SettingsIcon from '@/assets/icons/SettingsIcon';
 
 type QuranReaderProps = {
    data: QuranReaderData;
@@ -175,14 +176,20 @@ export default function QuranReader({ data }: QuranReaderProps) {
                   className="absolute inset-0 bg-black/40"
                />
                <div className="absolute right-0 top-0 h-full w-[min(22rem,calc(100vw-3rem))] overflow-y-auto bg-background p-4 shadow-xl">
-                  <button
-                     type="button"
-                     aria-label="Close reader settings"
-                     onClick={() => setIsSettingsDrawerOpen(false)}
-                     className="mb-3 ml-auto grid h-9 w-9 place-items-center rounded-full bg-muted text-foreground"
-                  >
-                     <X className="h-4 w-4" />
-                  </button>
+                  <div className="flex items-center justify-between mb-5">
+                     <div className="flex items-center gap-2">
+                        <SettingsIcon className="size-6" />
+                        <span className="text-xl font-semibold">Settings</span>
+                     </div>
+                     <button
+                        type="button"
+                        aria-label="Close reader settings"
+                        onClick={() => setIsSettingsDrawerOpen(false)}
+                        className="mb-3 ml-auto grid h-9 w-9 place-items-center rounded-full bg-muted text-foreground"
+                     >
+                        <X className="h-4 w-4" />
+                     </button>
+                  </div>
                   <ReaderSettings
                      arabicSize={arabicSize}
                      translationSize={translationSize}

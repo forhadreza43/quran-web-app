@@ -1,7 +1,13 @@
 'use client';
 
-import { Menu, Search, Settings } from 'lucide-react';
+import { Menu, Search } from 'lucide-react';
+import SettingsIcon from '@/assets/icons/SettingsIcon'
 import { ModeToggle } from '../ModeToggle';
+import {
+   Tooltip,
+   TooltipContent,
+   TooltipTrigger,
+} from '@/components/ui/tooltip';
 
 type QuranHeaderProps = {
    isHidden: boolean;
@@ -23,46 +29,62 @@ export default function QuranHeader({
          }`}
       >
          <div className="flex items-center justify-between px-4 md:px-6 py-3">
-            <div>
-               <h1 className="text-lg font-semibold leading-tight">
-                  Quran Mazid
-               </h1>
-               <p className="text-xs text-muted-foreground leading-tight">
-                  Read, Study, and Learn The Quran
-               </p>
-            </div>
             <div className="flex items-center gap-2">
                <button
                   type="button"
                   aria-label="Open surah list"
                   onClick={onOpenSurahList}
-                  className="grid h-10 w-10 place-items-center rounded-full bg-primary-soft text-primary transition hover:bg-accent lg:hidden"
+                  className="grid h-10 w-10 place-items-center rounded-full bg-primary-soft text-primary transition bg-accent/40 lg:hidden"
                >
                   <Menu className="h-4 w-4" />
                </button>
+               <div>
+                  <h1 className="text-lg font-semibold leading-tight">
+                     Quran Mazid
+                  </h1>
+                  <p className="text-xs text-muted-foreground leading-tight">
+                     Read, Study, and Learn The Quran
+                  </p>
+               </div>
+            </div>
+            <div className="flex items-center gap-2">
+               <Tooltip>
+                  <TooltipTrigger asChild>
+                     <button
+                        type="button"
+                        aria-label="Search"
+                        className="grid h-10 w-10 place-items-center rounded-full bg-primary-soft text-primary transition bg-accent/40"
+                     >
+                        <Search className="h-4 w-4" />
+                     </button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                     <p>Search</p>
+                  </TooltipContent>
+               </Tooltip>
                <ModeToggle />
-               <button
-                  type="button"
-                  aria-label="Search"
-                  className="grid h-10 w-10 place-items-center rounded-full bg-primary-soft text-primary transition hover:bg-accent"
-               >
-                  <Search className="h-4 w-4" />
-               </button>
-               <button
-                  type="button"
-                  aria-label="Open reader settings"
-                  onClick={onOpenSettings}
-                  className="grid h-10 w-10 place-items-center rounded-full bg-primary-soft text-primary transition hover:bg-accent llg:hidden"
-               >
-                  <Settings className="h-4 w-4" />
-               </button>
+               <Tooltip>
+                  <TooltipTrigger asChild>
+                     <button
+                        type="button"
+                        aria-label="Open reader settings"
+                        onClick={onOpenSettings}
+                        className="grid h-10 w-10 place-items-center rounded-full bg-primary-soft text-primary transition bg-accent/40 llg:hidden"
+                     >
+                        <SettingsIcon className="h-4 w-4" />
+                     </button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                     <p>Settings</p>
+                  </TooltipContent>
+               </Tooltip>
+
                <button
                   type="button"
                   className="hidden items-center gap-2 rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition hover:opacity-90 sm:flex"
                >
                   Support Us{' '}
                   <span aria-hidden>
-                     {/* show support.svg here  */}
                      <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="19"

@@ -1,4 +1,8 @@
-import { BookOpen, ChevronDown } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
+import { Slider } from '@/components/ui/slider';
+import FontIcon from '@/assets/icons/FontIcon';
+import ReadSettingIcon from '@/assets/icons/ReadSettingIcon';
+
 
 type ReaderSettingsProps = {
    arabicSize: number;
@@ -22,7 +26,7 @@ export default function ReaderSettings({
    onReadingOpenChange,
 }: ReaderSettingsProps) {
    return (
-      <div className="space-y-3">
+      <div className="space-y-3 text-muted-foreground">
          <div className="grid grid-cols-2 gap-1 rounded-full bg-muted p-1 text-sm">
             <button
                type="button"
@@ -38,17 +42,24 @@ export default function ReaderSettings({
             </button>
          </div>
 
-         <div className="rounded-2xl border border-border bg-card">
+         <div className="rounded-2xl">
             <button
                type="button"
                onClick={() => onReadingOpenChange(!readingOpen)}
                className="flex w-full items-center justify-between px-4 py-3"
             >
                <span className="flex items-center gap-2 font-medium">
-                  <BookOpen className="h-4 w-4 text-primary" /> Reading Settings
+                  <ReadSettingIcon
+                     stroke={readingOpen && 'text-primary'}
+                     className={`${readingOpen ? 'fill-primary' : ''}`}
+                  />
+                  <span className={`${readingOpen ? 'text-primary' : ''}`}>
+                     Reading Settings
+                  </span>
                </span>
+
                <ChevronDown
-                  className={`h-4 w-4 transition ${readingOpen ? 'rotate-180' : ''}`}
+                  className={`h-4 w-4 transition ${readingOpen ? 'rotate-180 text-primary' : ''}`}
                />
             </button>
             {readingOpen && (
@@ -58,54 +69,58 @@ export default function ReaderSettings({
             )}
          </div>
 
-         <div className="rounded-2xl border border-border bg-card">
+         <div className="rounded-2xl bg-transparent">
             <button
                type="button"
                onClick={() => onFontOpenChange(!fontOpen)}
                className="flex w-full items-center justify-between px-4 py-3"
             >
-               <span className="flex items-center gap-2 font-medium">
-                  <span className="grid h-5 w-5 place-items-center rounded bg-primary text-[10px] font-bold text-primary-foreground">
-                     T
+               <span className={`flex items-center gap-2 font-medium `}>
+                  <FontIcon
+                     stroke={fontOpen && 'primary'}
+                     className={`${fontOpen ? 'fill-primary' : ''}`}
+                  />
+                  <span className={`${fontOpen ? 'text-primary' : ''}`}>
+                     Font Settings
                   </span>
-                  Font Settings
                </span>
                <ChevronDown
-                  className={`h-4 w-4 transition ${fontOpen ? 'rotate-180' : ''}`}
+                  className={`h-4 w-4 transition ${fontOpen ? 'rotate-180 text-primary' : ''}`}
                />
             </button>
             {fontOpen && (
-               <div className="space-y-5 border-t border-border px-4 py-4">
+               <div className="space-y-5 px-4 py-4">
                   <div>
                      <div className="flex items-center justify-between text-sm">
                         <span className="font-medium">Arabic Font Size</span>
-                        <span className="text-muted-foreground">{arabicSize}</span>
+                        <span className="text-primary">{arabicSize}</span>
                      </div>
-                     <input
-                        type="range"
+                     <Slider
+                        value={[arabicSize]}
                         min={18}
                         max={56}
-                        value={arabicSize}
-                        onChange={(event) =>
-                           onArabicSizeChange(Number(event.target.value))
-                        }
-                        className="mt-2 w-full accent-[var(--color-primary)]"
+                        step={1}
+                        onValueChange={(value) => onArabicSizeChange(value[0])}
+                        className="mx-auto w-full max-w-xs mt-3"
                      />
                   </div>
                   <div>
                      <div className="flex items-center justify-between text-sm">
-                        <span className="font-medium">Translation Font Size</span>
-                        <span className="text-muted-foreground">{translationSize}</span>
+                        <span className="font-medium">
+                           Translation Font Size
+                        </span>
+                        <span className="text-primary">{translationSize}</span>
                      </div>
-                     <input
-                        type="range"
+
+                     <Slider
+                        value={[translationSize]}
                         min={12}
                         max={28}
-                        value={translationSize}
-                        onChange={(event) =>
-                           onTranslationSizeChange(Number(event.target.value))
+                        step={1}
+                        onValueChange={(value) =>
+                           onTranslationSizeChange(value[0])
                         }
-                        className="mt-2 w-full accent-[var(--color-primary)]"
+                        className="mx-auto w-full max-w-xs mt-3"
                      />
                   </div>
                   <div>
