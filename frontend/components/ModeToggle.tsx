@@ -11,28 +11,39 @@ import {
    DropdownMenuItem,
    DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import LightIcon from '@/assets/icons/LightIcon';
+import DarkIcon from '@/assets/icons/DarkIcon';
+import SystemIcon from '@/assets/icons/SystemIcon';
 
 export function ModeToggle() {
-   const { setTheme } = useTheme();
+   const {theme, setTheme } = useTheme();
+   console.log('Current theme:', theme);
 
    return (
       <DropdownMenu>
          <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="icon">
-               <Sun className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
-               <Moon className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
+            <Button className="grid h-10 w-10 place-items-center rounded-full bg-primary-soft text-primary hover:bg-accent transition">
+               {theme === 'light' && <LightIcon />}
+               {theme === 'dark' && <DarkIcon />}
+               {theme === 'system' && <SystemIcon />}
                <span className="sr-only">Toggle theme</span>
             </Button>
          </DropdownMenuTrigger>
          <DropdownMenuContent align="end">
-            <DropdownMenuItem onClick={() => setTheme('light')}>
-               Light
+            <DropdownMenuItem
+               className="py-2"
+               onClick={() => setTheme('light')}
+            >
+               <LightIcon className="text-white" /> Light
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setTheme('dark')}>
-               Dark
+            <DropdownMenuItem className="py-2" onClick={() => setTheme('dark')}>
+               <DarkIcon className="text-white" /> Dark
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setTheme('system')}>
-               System
+            <DropdownMenuItem
+               className="py-2"
+               onClick={() => setTheme('system')}
+            >
+               <SystemIcon className="text-white" /> System
             </DropdownMenuItem>
          </DropdownMenuContent>
       </DropdownMenu>
