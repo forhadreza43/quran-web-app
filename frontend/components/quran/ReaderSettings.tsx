@@ -136,7 +136,7 @@ export default function ReaderSettings({
                   <div>
                      <div className="text-sm font-medium">Arabic Font Face</div>
                      <Select value={fontFace} onValueChange={onFontFaceChange}>
-                        <SelectTrigger className="mt-2 w-full">
+                        <SelectTrigger className="mt-2 w-full py-5">
                            <SelectValue
                               placeholder="Select font"
                        
@@ -144,22 +144,22 @@ export default function ReaderSettings({
                         </SelectTrigger>
 
                         <SelectContent position="popper">
-                           <SelectItem value="amiri-regular" className="p-2">
+                           <SelectItem value="amiri-regular" className="p-3">
                               Amiri
                            </SelectItem>
 
                            <SelectItem
                               value="scheherazade-new-regular"
-                              className="p-2"
+                              className="p-3"
                            >
                               Scheherazade
                            </SelectItem>
 
-                           <SelectItem value="estedad-regular" className="p-2">
+                           <SelectItem value="estedad-regular" className="p-3">
                               Estedad
                            </SelectItem>
 
-                           <SelectItem value="tajawal-regular" className="p-2">
+                           <SelectItem value="tajawal-regular" className="p-3">
                               Tajawal
                            </SelectItem>
                         </SelectContent>
