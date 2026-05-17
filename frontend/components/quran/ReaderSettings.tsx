@@ -2,17 +2,25 @@ import { ChevronDown } from 'lucide-react';
 import { Slider } from '@/components/ui/slider';
 import FontIcon from '@/assets/icons/FontIcon';
 import ReadSettingIcon from '@/assets/icons/ReadSettingIcon';
-
+import {
+   Select,
+   SelectContent,
+   SelectItem,
+   SelectTrigger,
+   SelectValue,
+} from '@/components/ui/select';
 
 type ReaderSettingsProps = {
    arabicSize: number;
    translationSize: number;
    fontOpen: boolean;
    readingOpen: boolean;
+   fontFace: string;
    onArabicSizeChange: (size: number) => void;
    onTranslationSizeChange: (size: number) => void;
    onFontOpenChange: (open: boolean) => void;
    onReadingOpenChange: (open: boolean) => void;
+   onFontFaceChange: (font: string) => void;
 };
 
 export default function ReaderSettings({
@@ -20,10 +28,12 @@ export default function ReaderSettings({
    translationSize,
    fontOpen,
    readingOpen,
+   fontFace,
    onArabicSizeChange,
    onTranslationSizeChange,
    onFontOpenChange,
    onReadingOpenChange,
+   onFontFaceChange,
 }: ReaderSettingsProps) {
    return (
       <div className="space-y-3 text-muted-foreground">
@@ -125,12 +135,41 @@ export default function ReaderSettings({
                   </div>
                   <div>
                      <div className="text-sm font-medium">Arabic Font Face</div>
-                     <button
+                     <Select value={fontFace} onValueChange={onFontFaceChange}>
+                        <SelectTrigger className="mt-2 w-full">
+                           <SelectValue
+                              placeholder="Select font"
+                       
+                           />
+                        </SelectTrigger>
+
+                        <SelectContent position="popper">
+                           <SelectItem value="amiri-regular" className="p-2">
+                              Amiri
+                           </SelectItem>
+
+                           <SelectItem
+                              value="scheherazade-new-regular"
+                              className="p-2"
+                           >
+                              Scheherazade
+                           </SelectItem>
+
+                           <SelectItem value="estedad-regular" className="p-2">
+                              Estedad
+                           </SelectItem>
+
+                           <SelectItem value="tajawal-regular" className="p-2">
+                              Tajawal
+                           </SelectItem>
+                        </SelectContent>
+                     </Select>
+                     {/* <button
                         type="button"
                         className="mt-2 flex w-full items-center justify-between rounded-lg border border-border px-3 py-2 text-sm"
                      >
                         KFGQ <ChevronDown className="h-4 w-4" />
-                     </button>
+                     </button> */}
                   </div>
                </div>
             )}

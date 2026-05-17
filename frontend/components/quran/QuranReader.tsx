@@ -21,13 +21,46 @@ export default function QuranReader({ data }: QuranReaderProps) {
    const [selectedSurah, setSelectedSurah] = useState(1);
    const [search, setSearch] = useState('');
    const [tab, setTab] = useState<ReaderTab>('Surah');
-   const [arabicSize, setArabicSize] = useState(30);
-   const [translationSize, setTranslationSize] = useState(17);
    const [fontOpen, setFontOpen] = useState(true);
    const [readingOpen, setReadingOpen] = useState(false);
    const [isHeaderHidden, setIsHeaderHidden] = useState(false);
    const [isSurahDrawerOpen, setIsSurahDrawerOpen] = useState(false);
    const [isSettingsDrawerOpen, setIsSettingsDrawerOpen] = useState(false);
+   const [arabicSize, setArabicSize] = useState<number>(() => {
+      if (typeof window === 'undefined') return 30;
+
+      const savedArabicSize = localStorage.getItem('arabic-size');
+
+      return savedArabicSize ? Number(savedArabicSize) : 30;
+   });
+
+   const [translationSize, setTranslationSize] = useState<number>(() => {
+      if (typeof window === 'undefined') return 17;
+
+      const savedTranslationSize = localStorage.getItem('translation-size');
+
+      return savedTranslationSize ? Number(savedTranslationSize) : 17;
+   });
+
+   const [fontFace, setFontFace] = useState<string>(() => {
+      if (typeof window === 'undefined') {
+         return 'amiri-regular';
+      }
+
+      return localStorage.getItem('arabic-font-face') || 'amiri-regular';
+   });
+
+   useEffect(() => {
+      localStorage.setItem('arabic-size', arabicSize.toString());
+   }, [arabicSize]);
+
+   useEffect(() => {
+      localStorage.setItem('translation-size', translationSize.toString());
+   }, [translationSize]);
+
+   useEffect(() => {
+      localStorage.setItem('arabic-font-face', fontFace);
+   }, [fontFace]);
 
    useEffect(() => {
       window.scrollTo({ top: 0 });
@@ -68,7 +101,7 @@ export default function QuranReader({ data }: QuranReaderProps) {
          (surah) =>
             surah.englishName.toLowerCase().includes(query) ||
             surah.englishNameTranslation.toLowerCase().includes(query) ||
-            String(surah.number).includes(query),
+            String(surah.number).includes(query)
       );
    }, [data.surahs, search]);
 
@@ -108,6 +141,7 @@ export default function QuranReader({ data }: QuranReaderProps) {
                      arabicSize={arabicSize}
                      translationSize={translationSize}
                      onSelectedSurahChange={setSelectedSurah}
+                     fontFace={fontFace}
                   />
                   <aside
                      className={`hidden space-y-3 overflow-y-auto llg:block llg:sticky ${
@@ -125,6 +159,8 @@ export default function QuranReader({ data }: QuranReaderProps) {
                         onTranslationSizeChange={setTranslationSize}
                         onFontOpenChange={setFontOpen}
                         onReadingOpenChange={setReadingOpen}
+                        fontFace={fontFace}
+                        onFontFaceChange={setFontFace}
                      />
                      <SupportPanel />
                   </aside>

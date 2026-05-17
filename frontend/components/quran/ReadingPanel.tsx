@@ -7,17 +7,18 @@ type ReadingPanelProps = {
    englishSurah: SurahWithAyahs;
    arabicSize: number;
    translationSize: number;
+   fontFace: string;
    onSelectedSurahChange: (surahNumber: number) => void;
 };
 
-const BISMILLAH =
-   'بِسْمِ ٱللّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ';
+const BISMILLAH = 'بِسْمِ ٱللّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ';
 
 export default function ReadingPanel({
    arabicSurah,
    englishSurah,
    arabicSize,
    translationSize,
+   fontFace,
    onSelectedSurahChange,
 }: ReadingPanelProps) {
    return (
@@ -56,8 +57,10 @@ export default function ReadingPanel({
                      />
                      <div className="space-y-4">
                         <p
-                           className="font-arabic text-right text-foreground"
-                           style={{ fontSize: `${arabicSize}px` }}
+                           className={`${fontFace} text-right text-foreground`}
+                           style={{
+                              fontSize: `${arabicSize}px`,
+                           }}
                         >
                            {ayah.text}
                         </p>
@@ -82,7 +85,9 @@ export default function ReadingPanel({
             <button
                type="button"
                disabled={arabicSurah.number === 1}
-               onClick={() => onSelectedSurahChange(Math.max(1, arabicSurah.number - 1))}
+               onClick={() =>
+                  onSelectedSurahChange(Math.max(1, arabicSurah.number - 1))
+               }
                className="rounded-full border border-border px-4 py-2 text-sm font-medium hover:bg-muted disabled:opacity-40"
             >
                Previous

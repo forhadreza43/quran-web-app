@@ -74,7 +74,7 @@ export default function SurahList({
                className="w-full rounded-full bg-muted py-2.5 pl-9 pr-3 text-sm outline-none ring-primary/30 focus:ring-2"
             />
          </div>
-         {/* Use scrollbar-auto, scrollbar-thin, and scrollbar-none to control scrollbar-width: */}
+        
          <div className="mt-3 flex-1 space-y-1.5 overflow-y-auto scrollbar-thin scrollbar-thumb-primary/30 scrollbar-track-transparent pr-1">
             {surahs.map((surah) => {
                const active = surah.number === selectedSurah;
