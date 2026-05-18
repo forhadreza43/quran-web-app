@@ -6,7 +6,8 @@
    "main": "src/server.js",
    "scripts": {
       "dev": "bun run --watch src/server.ts",
-      "start": "bun run src/server.ts",
+      "start": "node dist/server.js",
+      "build": "tsc",
       "normalize": "tsx src/scripts/normalize-quran.ts"
    },
    "keywords": [
@@ -25,8 +26,7 @@
       "fuse.js": "^7.3.0",
       "helmet": "^8.1.0",
       "morgan": "^1.10.1",
-      "zod": "3.25.76",
-      
+      "zod": "3.25.76"
    },
    "devDependencies": {
       "@types/compression": "^1.7.5",
