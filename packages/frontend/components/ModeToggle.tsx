@@ -1,6 +1,5 @@
 'use client';
 
-import * as React from 'react';
 import { useTheme } from 'next-themes';
 
 import { Button } from '@/components/ui/button';
@@ -14,18 +13,22 @@ import LightIcon from '@/assets/icons/LightIcon';
 import DarkIcon from '@/assets/icons/DarkIcon';
 import SystemIcon from '@/assets/icons/SystemIcon';
 
-
 export function ModeToggle() {
    const { theme, setTheme } = useTheme();
+
    console.log('Current theme:', theme);
 
    return (
       <DropdownMenu>
          <DropdownMenuTrigger asChild>
             <Button className="grid h-10 w-10 place-items-center rounded-full bg-primary-soft text-primary bg-accent/40 transition">
-               {theme === 'light' && <LightIcon />}
-               {theme === 'dark' && <DarkIcon />}
-               {theme === 'system' && <SystemIcon />}
+               {theme === 'light' ? (
+                  <LightIcon />
+               ) : theme === 'dark' ? (
+                  <DarkIcon />
+               ) : (
+                  <SystemIcon />
+               )}
                <span className="sr-only">Toggle theme</span>
             </Button>
          </DropdownMenuTrigger>

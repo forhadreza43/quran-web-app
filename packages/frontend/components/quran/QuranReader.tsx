@@ -1,7 +1,7 @@
 'use client';
 
 import { X } from 'lucide-react';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, useLayoutEffect } from 'react';
 import type { QuranReaderData } from '@/lib/quran';
 import LeftNav from './LeftNav';
 import QuranHeader from './QuranHeader';
@@ -25,6 +25,10 @@ export default function QuranReader({ data }: QuranReaderProps) {
    const [isHeaderHidden, setIsHeaderHidden] = useState(false);
    const [isSurahDrawerOpen, setIsSurahDrawerOpen] = useState(false);
    const [isSettingsDrawerOpen, setIsSettingsDrawerOpen] = useState(false);
+   const [mounted, setMounted] = useState(() => {
+      if (typeof window === 'undefined') return false;
+      return true;
+   });
    const [arabicSize, setArabicSize] = useState<number>(() => {
       if (typeof window === 'undefined') return 30;
 
@@ -49,6 +53,7 @@ export default function QuranReader({ data }: QuranReaderProps) {
       return localStorage.getItem('arabic-font-face') || 'amiri-regular';
    });
 
+   
    useEffect(() => {
       localStorage.setItem('arabic-size', arabicSize.toString());
    }, [arabicSize]);
@@ -134,34 +139,38 @@ export default function QuranReader({ data }: QuranReaderProps) {
                         onTabChange={setTab}
                      />
                   </div>
-                  <ReadingPanel
-                     arabicSurah={arabicSurah}
-                     englishSurah={englishSurah}
-                     arabicSize={arabicSize}
-                     translationSize={translationSize}
-                     onSelectedSurahChange={setSelectedSurah}
-                     fontFace={fontFace}
-                  />
-                  <aside
-                     className={`hidden space-y-3 overflow-y-auto llg:block llg:sticky ${
-                        isHeaderHidden
-                           ? 'llg:top-3 llg:h-[calc(100vh-24px)]'
-                           : 'llg:top-18 llg:h-[calc(100vh-89px)]'
-                     }`}
-                  >
-                     <ReaderSettings
-                        arabicSize={arabicSize}
-                        translationSize={translationSize}
-                        fontOpen={fontOpen}
-                        readingOpen={readingOpen}
-                        onArabicSizeChange={setArabicSize}
-                        onTranslationSizeChange={setTranslationSize}
-                        onFontOpenChange={setFontOpen}
-                        onReadingOpenChange={setReadingOpen}
-                        fontFace={fontFace}
-                        onFontFaceChange={setFontFace}
-                     />
-                  </aside>
+                  {mounted && (
+                     <>
+                        <ReadingPanel
+                           arabicSurah={arabicSurah}
+                           englishSurah={englishSurah}
+                           arabicSize={arabicSize}
+                           translationSize={translationSize}
+                           onSelectedSurahChange={setSelectedSurah}
+                           fontFace={fontFace}
+                        />
+                        <aside
+                           className={`hidden space-y-3 overflow-y-auto llg:block llg:sticky ${
+                              isHeaderHidden
+                                 ? 'llg:top-3 llg:h-[calc(100vh-24px)]'
+                                 : 'llg:top-18 llg:h-[calc(100vh-89px)]'
+                           }`}
+                        >
+                           <ReaderSettings
+                              arabicSize={arabicSize}
+                              translationSize={translationSize}
+                              fontOpen={fontOpen}
+                              readingOpen={readingOpen}
+                              onArabicSizeChange={setArabicSize}
+                              onTranslationSizeChange={setTranslationSize}
+                              onFontOpenChange={setFontOpen}
+                              onReadingOpenChange={setReadingOpen}
+                              fontFace={fontFace}
+                              onFontFaceChange={setFontFace}
+                           />
+                        </aside>
+                     </>
+                  )}
                </div>
             </div>
          </div>

@@ -1,3 +1,4 @@
+"use client";
 import { BookOpen, StepBack, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import type { SurahWithAyahs } from '@/lib/quran';
