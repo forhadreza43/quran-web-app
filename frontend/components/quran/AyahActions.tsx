@@ -1,11 +1,26 @@
-import { BookOpen, Bookmark, MoreHorizontal, Play } from 'lucide-react';
+import MoreIcon from '@/assets/icons/MoreIcon';
+import PlayIcon from '@/assets/icons/PlayIcon';
+import ReadSettingIcon from '@/assets/icons/ReadSettingIcon';
+import BookmarkIcon from '@/assets/icons/BookmarkIcon';
+import {
+   Tooltip,
+   TooltipContent,
+   TooltipTrigger,
+} from '@/components/ui/tooltip';
 
 type AyahActionsProps = {
    surahNumber: number;
    ayahNumber: number;
+   onPlayAyah: (surahNumber: number, ayahNumber: number) => void;
 };
 
-export default function AyahActions({ surahNumber, ayahNumber }: AyahActionsProps) {
+export default function AyahActions({
+   surahNumber,
+   ayahNumber,
+   onPlayAyah,
+}: AyahActionsProps) {
+  
+
    return (
       <div className="flex flex-col items-center gap-3 text-muted-foreground">
          <span className="text-sm font-semibold text-primary">
@@ -14,30 +29,31 @@ export default function AyahActions({ surahNumber, ayahNumber }: AyahActionsProp
          <button
             type="button"
             aria-label="Play ayah"
+            onClick={() => onPlayAyah(surahNumber, ayahNumber)}
             className="grid h-8 w-8 place-items-center rounded-full transition hover:bg-muted hover:text-primary"
          >
-            <Play className="h-3.5 w-3.5" />
+            <PlayIcon className="h-3.5 w-3.5" />
          </button>
          <button
             type="button"
             aria-label="Open tafsir"
             className="grid h-8 w-8 place-items-center rounded-full transition hover:bg-muted hover:text-primary"
          >
-            <BookOpen className="h-3.5 w-3.5" />
+            <ReadSettingIcon className="h-3.5 w-3.5" />
          </button>
          <button
             type="button"
             aria-label="Bookmark ayah"
             className="grid h-8 w-8 place-items-center rounded-full transition hover:bg-muted hover:text-primary"
          >
-            <Bookmark className="h-3.5 w-3.5" />
+            <BookmarkIcon className="h-3.5 w-3.5" />
          </button>
          <button
             type="button"
             aria-label="More ayah options"
             className="grid h-8 w-8 place-items-center rounded-full transition hover:bg-muted hover:text-primary"
          >
-            <MoreHorizontal className="h-3.5 w-3.5" />
+            <MoreIcon className="h-3.5 w-3.5" />
          </button>
       </div>
    );

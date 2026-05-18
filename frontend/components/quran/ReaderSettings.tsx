@@ -2,6 +2,7 @@ import { ChevronDown } from 'lucide-react';
 import { Slider } from '@/components/ui/slider';
 import FontIcon from '@/assets/icons/FontIcon';
 import ReadSettingIcon from '@/assets/icons/ReadSettingIcon';
+import SupportPanel from './SupportPanel';
 import {
    Select,
    SelectContent,
@@ -9,6 +10,7 @@ import {
    SelectTrigger,
    SelectValue,
 } from '@/components/ui/select';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 type ReaderSettingsProps = {
    arabicSize: number;
@@ -37,143 +39,170 @@ export default function ReaderSettings({
 }: ReaderSettingsProps) {
    return (
       <div className="space-y-3 text-muted-foreground">
-         <div className="grid grid-cols-2 gap-1 rounded-full bg-muted p-1 text-sm">
-            <button
-               type="button"
-               className="rounded-full bg-card py-1.5 font-medium shadow-sm"
+         <Tabs
+            defaultValue="translation"
+            className="flex min-h-0 flex-1 flex-col"
+         >
+            <TabsList className="rounded-full w-full">
+               <TabsTrigger value="translation" className="rounded-full">
+                  Translation
+               </TabsTrigger>
+               <TabsTrigger value="reading" className="rounded-full">
+                  Reading
+               </TabsTrigger>
+            </TabsList>
+            <TabsContent
+               value="translation"
+               className="mt-3 min-h-0 flex-1 overflow-hidden"
             >
-               Translation
-            </button>
-            <button
-               type="button"
-               className="rounded-full py-1.5 font-medium text-muted-foreground"
-            >
-               Reading
-            </button>
-         </div>
-
-         <div className="rounded-2xl">
-            <button
-               type="button"
-               onClick={() => onReadingOpenChange(!readingOpen)}
-               className="flex w-full items-center justify-between px-4 py-3"
-            >
-               <span className="flex items-center gap-2 font-medium">
-                  <ReadSettingIcon
-                     stroke={readingOpen && 'text-primary'}
-                     className={`${readingOpen ? 'fill-primary' : ''}`}
-                  />
-                  <span className={`${readingOpen ? 'text-primary' : ''}`}>
-                     Reading Settings
-                  </span>
-               </span>
-
-               <ChevronDown
-                  className={`h-4 w-4 transition ${readingOpen ? 'rotate-180 text-primary' : ''}`}
-               />
-            </button>
-            {readingOpen && (
-               <div className="border-t border-border px-4 py-3 text-sm text-muted-foreground">
-                  Translation editions and reciters coming soon.
-               </div>
-            )}
-         </div>
-
-         <div className="rounded-2xl bg-transparent">
-            <button
-               type="button"
-               onClick={() => onFontOpenChange(!fontOpen)}
-               className="flex w-full items-center justify-between px-4 py-3"
-            >
-               <span className={`flex items-center gap-2 font-medium `}>
-                  <FontIcon
-                     stroke={fontOpen && 'primary'}
-                     className={`${fontOpen ? 'fill-primary' : ''}`}
-                  />
-                  <span className={`${fontOpen ? 'text-primary' : ''}`}>
-                     Font Settings
-                  </span>
-               </span>
-               <ChevronDown
-                  className={`h-4 w-4 transition ${fontOpen ? 'rotate-180 text-primary' : ''}`}
-               />
-            </button>
-            {fontOpen && (
-               <div className="space-y-5 px-4 py-4">
-                  <div>
-                     <div className="flex items-center justify-between text-sm">
-                        <span className="font-medium">Arabic Font Size</span>
-                        <span className="text-primary">{arabicSize}</span>
-                     </div>
-                     <Slider
-                        value={[arabicSize]}
-                        min={18}
-                        max={56}
-                        step={1}
-                        onValueChange={(value) => onArabicSizeChange(value[0])}
-                        className="mx-auto w-full max-w-xs mt-3"
-                     />
-                  </div>
-                  <div>
-                     <div className="flex items-center justify-between text-sm">
-                        <span className="font-medium">
-                           Translation Font Size
+               <div className="w-full">
+                  <button
+                     type="button"
+                     onClick={() => onReadingOpenChange(!readingOpen)}
+                     className="flex w-full items-center justify-between py-3"
+                  >
+                     <span className="flex items-center gap-2 font-medium">
+                        <ReadSettingIcon
+                           stroke={readingOpen ? 'primary' : ''}
+                           className={`${readingOpen ? 'fill-primary' : ''}`}
+                        />
+                        <span
+                           className={`${readingOpen ? 'text-primary' : ''}`}
+                        >
+                           Reading Settings
                         </span>
-                        <span className="text-primary">{translationSize}</span>
-                     </div>
+                     </span>
 
-                     <Slider
-                        value={[translationSize]}
-                        min={12}
-                        max={28}
-                        step={1}
-                        onValueChange={(value) =>
-                           onTranslationSizeChange(value[0])
-                        }
-                        className="mx-auto w-full max-w-xs mt-3"
+                     <ChevronDown
+                        className={`h-4 w-4 transition ${readingOpen ? 'rotate-180 text-primary' : ''}`}
                      />
-                  </div>
-                  <div>
-                     <div className="text-sm font-medium">Arabic Font Face</div>
-                     <Select value={fontFace} onValueChange={onFontFaceChange}>
-                        <SelectTrigger className="mt-2 w-full py-5">
-                           <SelectValue
-                              placeholder="Select font"
-                       
-                           />
-                        </SelectTrigger>
-
-                        <SelectContent position="popper">
-                           <SelectItem value="amiri-regular" className="p-3">
-                              Amiri
-                           </SelectItem>
-
-                           <SelectItem
-                              value="scheherazade-new-regular"
-                              className="p-3"
-                           >
-                              Scheherazade
-                           </SelectItem>
-
-                           <SelectItem value="estedad-regular" className="p-3">
-                              Estedad
-                           </SelectItem>
-
-                           <SelectItem value="tajawal-regular" className="p-3">
-                              Tajawal
-                           </SelectItem>
-                        </SelectContent>
-                     </Select>
-                     {/* <button
-                        type="button"
-                        className="mt-2 flex w-full items-center justify-between rounded-lg border border-border px-3 py-2 text-sm"
-                     >
-                        KFGQ <ChevronDown className="h-4 w-4" />
-                     </button> */}
-                  </div>
+                  </button>
+                  {readingOpen && (
+                     <div className="border-t border-border  py-3 text-sm text-muted-foreground">
+                        Translation editions and reciters coming soon.
+                     </div>
+                  )}
                </div>
-            )}
-         </div>
+
+               <div className="rounded-2xl bg-transparent">
+                  <button
+                     type="button"
+                     onClick={() => onFontOpenChange(!fontOpen)}
+                     className="flex w-full items-center justify-between  py-3"
+                  >
+                     <span className={`flex items-center gap-2 font-medium `}>
+                        <FontIcon
+                           stroke={fontOpen ? 'primary':""}
+                           className={`${fontOpen ? 'fill-primary' : ''}`}
+                        />
+                        <span className={`${fontOpen ? 'text-primary' : ''}`}>
+                           Font Settings
+                        </span>
+                     </span>
+                     <ChevronDown
+                        className={`h-4 w-4 transition ${fontOpen ? 'rotate-180 text-primary' : ''}`}
+                     />
+                  </button>
+
+                  {fontOpen && (
+                     <div className="space-y-5  py-4">
+                        {/* Arabic Font Size */}
+                        <div>
+                           <div className="flex items-center justify-between text-sm">
+                              <span className="font-medium">
+                                 Arabic Font Size
+                              </span>
+                              <span className="text-primary">{arabicSize}</span>
+                           </div>
+                           <Slider
+                              value={[arabicSize]}
+                              min={18}
+                              max={56}
+                              step={1}
+                              onValueChange={(value) =>
+                                 onArabicSizeChange(value[0])
+                              }
+                              className="mx-auto w-full max-w-xs mt-3"
+                           />
+                        </div>
+                        {/* Translation Font Size */}
+                        <div>
+                           <div className="flex items-center justify-between text-sm">
+                              <span className="font-medium">
+                                 Translation Font Size
+                              </span>
+                              <span className="text-primary">
+                                 {translationSize}
+                              </span>
+                           </div>
+
+                           <Slider
+                              value={[translationSize]}
+                              min={12}
+                              max={28}
+                              step={1}
+                              onValueChange={(value) =>
+                                 onTranslationSizeChange(value[0])
+                              }
+                              className="mx-auto w-full max-w-xs mt-3"
+                           />
+                        </div>
+                        {/* fontface  */}
+                        <div>
+                           <div className="text-sm font-medium">
+                              Arabic Font Face
+                           </div>
+                           <Select
+                              value={fontFace}
+                              onValueChange={onFontFaceChange}
+                           >
+                              <SelectTrigger className="mt-2 w-full py-5">
+                                 <SelectValue placeholder="Select font" />
+                              </SelectTrigger>
+
+                              <SelectContent position="popper">
+                                 <SelectItem
+                                    value="amiri-regular"
+                                    className="p-3"
+                                 >
+                                    Amiri
+                                 </SelectItem>
+
+                                 <SelectItem
+                                    value="scheherazade-new-regular"
+                                    className="p-3"
+                                 >
+                                    Scheherazade
+                                 </SelectItem>
+
+                                 <SelectItem
+                                    value="estedad-regular"
+                                    className="p-3"
+                                 >
+                                    Estedad
+                                 </SelectItem>
+
+                                 <SelectItem
+                                    value="tajawal-regular"
+                                    className="p-3"
+                                 >
+                                    Tajawal
+                                 </SelectItem>
+                              </SelectContent>
+                           </Select>
+                        </div>
+                     </div>
+                  )}
+               </div>
+               <SupportPanel />
+            </TabsContent>
+            <TabsContent
+               value="reading"
+               className="mt-3 min-h-0 flex-1 overflow-hidden flex items-center justify-center"
+            >
+               <div>Not implemented yet. Features coming soon. Stay tuned.</div>
+            </TabsContent>
+         </Tabs>
       </div>
    );
 }

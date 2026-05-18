@@ -3,11 +3,10 @@
 import { X } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import type { QuranReaderData } from '@/lib/quran';
-import LeftNav from '../LeftNav';
+import LeftNav from './LeftNav';
 import QuranHeader from './QuranHeader';
 import ReaderSettings from './ReaderSettings';
 import ReadingPanel from './ReadingPanel';
-import SupportPanel from './SupportPanel';
 import SurahList, { type ReaderTab } from './SurahList';
 import SettingsIcon from '@/assets/icons/SettingsIcon';
 
@@ -162,7 +161,6 @@ export default function QuranReader({ data }: QuranReaderProps) {
                         fontFace={fontFace}
                         onFontFaceChange={setFontFace}
                      />
-                     <SupportPanel />
                   </aside>
                </div>
             </div>
@@ -235,10 +233,9 @@ export default function QuranReader({ data }: QuranReaderProps) {
                      onTranslationSizeChange={setTranslationSize}
                      onFontOpenChange={setFontOpen}
                      onReadingOpenChange={setReadingOpen}
+                     fontFace={fontFace}
+                     onFontFaceChange={setFontFace}
                   />
-                  <div className="mt-3">
-                     <SupportPanel />
-                  </div>
                </div>
             </div>
          )}
